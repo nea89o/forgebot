@@ -1,0 +1,3 @@
+[submodule "atrocity"]
+	path = atrocity
+	url = https://git.nea.moe/atrocity.git
