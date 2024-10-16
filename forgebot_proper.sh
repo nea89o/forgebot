@@ -11,6 +11,7 @@ fi
 source "$(dirname -- "$0")"/atrocity/load.sh
 source "$(dirname -- "$0")"/hypixel_api.sh
 source "$(dirname -- "$0")"/data.sh
+source "$(dirname -- "$0")"/forgebot.sh
 
 find_option() {
   # Usage: find_option <data> <name>
@@ -18,6 +19,11 @@ find_option() {
 }
 
 disallow_mentions='"allowed_mentions": {"parse":[]}'
+lookup_watched_account() {
+  while read username ;do
+    curl "https://mowojang.matdoes.dev/$username" 2>/dev/null
+  done
+}
 
 atrocity_on_INTERACTION_CREATE() {
   local type
@@ -65,10 +71,21 @@ EOF
         )"
       fi
     fi
-    if [[ $command_name == unregister ]]; then
+    if [[ $command_name == list ]]; then
       atrocity_debug "listing"
       # TODO first ack then edit
-      list_watchers "$user"
+
+      watched_accounts="$(find_watched_accounts "$user" | lookup_watched_account | jq -s '.' | jq '("You are watching these accounts:\n"+(.|map("- [`"+.name+"`](<http://namemc.com/profile/"+.id+">)")|join("\n")))')"
+      atrocity_rest POST "interactions/$id/$token/callback" "$(cat << EOF
+{
+  "type": 4,
+  "data": {
+    "content": $watched_accounts,
+    $disallow_mentions
+  }
+}
+EOF
+      )"
     fi
     if [[ $command_name == unregister ]]; then
       username="$(find_option "$1" username)"
@@ -113,6 +130,31 @@ atrocity_on_READY() {
 
   atrocity_rest POST applications/"$user_id"/${GUILD_EXTRA}commands "$(cat << 'EOF'
 {
+  "name": "list",
+  "type": 1,
+  "description": "List all users you are watching",
+  "options": [
+  ]
+}
+EOF
+  )"
+  atrocity_rest POST applications/"$user_id"/${GUILD_EXTRA}commands "$(cat << 'EOF'
+{
+  "name": "unregister",
+  "type": 1,
+  "description": "Unregister a profile that was watched by the forge bot",
+  "options": [
+    {
+      "name": "username",
+      "description": "The Minecraft user name you don't want to watch anymore",
+      "type": 3
+    }
+  ]
+}
+EOF
+  )"
+  atrocity_rest POST applications/"$user_id"/${GUILD_EXTRA}commands "$(cat << 'EOF'
+{
   "name": "register",
   "type": 1,
   "description": "Register a profile to be watched by the forge bot",
@@ -126,6 +168,7 @@ atrocity_on_READY() {
 }
 EOF
   )"
+  poll_forge_events &
 }
 
 

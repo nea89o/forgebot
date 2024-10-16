@@ -1,3 +1,7 @@
 env.sh
 *.log
+*.json
+notificationdata
+messagedata
+forgebotdata
 

@@ -1,6 +1,10 @@
 export FORGEBOT_DATA_DIR="forgebotdata"
 mkdir -p "$FORGEBOT_DATA_DIR" 
 
+list_all_watched_accounts() {
+  grep --files-with-matches -rE '.*' "$FORGEBOT_DATA_DIR" | sed s'|.*/||'
+}
+
 list_watchers() {
   # Usage: list_watchers <minecraft uuid>
   cat "$FORGEBOT_DATA_DIR/$1"

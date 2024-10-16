@@ -2,4 +2,6 @@
 
 export ATROCITY_TOKEN="MzEy.............................................................."
 export HYPIXEL_KEY="c79e914b-a28c-4aea-87bf-ef645dc9c595"
+export CHANNEL_ID="761286829751402550"
+
 
