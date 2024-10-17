@@ -7,9 +7,11 @@
 # curl
 # find
 
+rm -fr "${DATA_DIR:-.}/repo"
+git clone http://github.com/notenoughupdates/notenoughupdates-repo "${DATA_DIR:-.}/"repo --depth=1
 
 function get_duration() {
-    jq '.recipes[] | select(.type ="forge") | .duration * 1000' < repo/items/$1.json
+    jq '.recipes[] | select(.type ="forge") | .duration * 1000' < "${DATA_DIR:-.}"/repo/items/$1.json
 }
 
 

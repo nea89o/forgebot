@@ -12,7 +12,7 @@ require_program() {
     fi
   done
 }
-require_program curl jq websocat printf grep find sed mkdir touch rm mv mkfifo basename tty
+require_program curl jq websocat printf grep find sed mkdir touch rm mv mkfifo basename tty git
 if ! [[ "$(grep --version)" = *GNU* ]]; then
   echo Using non-GNU grep. This can cause issues since we use some non standard grep options.
   exit 1
@@ -28,6 +28,7 @@ if [[ x"$HYPIXEL_KEY" == x ]]; then
   echo "Please set HYPIXEL_KEY to your hypixel api key"
   exit 1
 fi
+echo Data dir: "${DATA_DIR:-.}"
 source "$(dirname -- "$0")"/atrocity/load.sh
 source "$(dirname -- "$0")"/hypixel_api.sh
 source "$(dirname -- "$0")"/data.sh
