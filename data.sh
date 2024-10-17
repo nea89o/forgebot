@@ -1,4 +1,4 @@
-export FORGEBOT_DATA_DIR="forgebotdata"
+export FORGEBOT_DATA_DIR="${DATA_DIR:-.}/forgebotdata"
 mkdir -p "$FORGEBOT_DATA_DIR" 
 
 list_all_watched_accounts() {

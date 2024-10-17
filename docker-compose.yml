@@ -1,0 +1,11 @@
+
+services:
+  forgebot:
+    build: .
+    environment:
+      ATROCITY_TOKEN: 'DISCORD_TOKEN'
+      HYPIXEL_KEY: 'HYPIXEL_API_KEY'
+      CHANNEL_ID: 'NOTIFICATION_CHANNEL_ID'
+      DATA_DIR: '/app/data'
+    volumes:
+      - ./data:/app/data

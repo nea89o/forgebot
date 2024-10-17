@@ -1,4 +1,24 @@
 #!/bin/bash
+
+program_exists() {
+  which "$1" >/dev/null
+  return $?
+}
+require_program() {
+  for prog in "$@"; do
+    if ! program_exists "$prog"; then
+      echo "Missing program: $prog" 
+      exit 1
+    fi
+  done
+}
+require_program curl jq websocat printf grep find sed mkdir touch rm mv mkfifo basename tty
+if ! [[ "$(grep --version)" = *GNU* ]]; then
+  echo Using non-GNU grep. This can cause issues since we use some non standard grep options.
+  exit 1
+fi
+
+
 [[ -f "$(dirname -- "$0")"/env.sh ]] && source "$(dirname -- "$0")"/env.sh
 if [[ x"$ATROCITY_TOKEN" == x ]]; then
   echo "Please set ATROCITY_TOKEN to your discord token"
