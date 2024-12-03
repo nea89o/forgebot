@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Container version="2">
+    <Name>ForgeBot</Name>
+    <Repository>ghcr.io/nea89o/forgebot</Repository>
+    <Registry>ghcr.io</Registry>
+    <Network>bridge</Network>
+    <Privileged>false</Privileged>
+    <Support>https://discord.gg/64pFP94AWA</Support>
+    <Project>https://github.com/nea89o/forgebot</Project>
+    <Overview>Notify on finished forging projects</Overview>
+    <WebUI>https://www.youtube.com/watch?v=dQw4w9WgXcQ</WebUI>
+    <TemplateURL>https://raw.githubusercontent.com/nea89o/forgebot/master/mycelium-warning.xml</TemplateURL>
+    <Icon>https://static.wikia.nocookie.net/hypixel-skyblock/images/7/73/Forgers_Sprite.png/revision/latest?cb=20210314031856</Icon>
+    <ExtraParams/>
+    <PostArgs/>
+    <DonateText>Please give me SkyBlock coins</DonateText>
+    <DonateLink>https://sky.shiiyu.moe/stats/lrg89/</DonateLink>
+    <!--
+    export ATROCITY_TOKEN="MzEy.............................................................."
+export HYPIXEL_KEY="c79e914b-a28c-4aea-87bf-ef645dc9c595"
+export CHANNEL_ID="761286829751402550"
+    -->
+    <Config Name="Discord Bot Token" Target="ATROCITY_TOKEN" Default="" Mode="" Description="The discord bot token for this bot" Type="Variable" Display="always" Required="true" Mask="true"/>
+    <Config Name="Hypixel API Key" Target="HYPIXEL_KEY" Default="" Mode="" Description="The Hypixel API key to request profiles with" Type="Variable" Display="always" Required="true" Mask="true"/>
+    <Config Name="Channel ID" Target="CHANNEL_ID" Default="" Mode="" Description="The channel in which to send pings" Type="Variable" Display="always" Required="true" Mask="false"/>
+    <Config Name="Savedata" Target="/app/forgebot/data" Default="" Mode="rw" Description="Save data for user <-> discord mappings & last notifications" Type="Path" Display="always" Required="true" Mask="false"/>
+</Container>
+
+
