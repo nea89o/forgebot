@@ -1,5 +1,5 @@
 FROM alpine
-RUN apk add --no-cache websocat bash jq grep curl git
+RUN apk add --no-cache websocat bash jq grep curl git inotify-tools
 COPY ./ /app/forgebot/
 # Some windows systems delete the executable bit, this fixes it inside of the docker container
 RUN chmod +x /app/forgebot/forgebot_proper.sh
